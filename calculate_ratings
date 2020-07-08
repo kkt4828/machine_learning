@@ -1,0 +1,49 @@
+import pandas as pd
+import numpy as np
+from itertools import product
+
+def predict_rating(user_name, book_name):
+    neighbors_ratings = ratings[book_name].drop(index = user_name)
+    neighbors_similarity = similarity_table[user_name].drop(index = user_name)
+    
+    nominator = (neighbors_ratings * neighbors_similarity).sum()
+    denominator = neighbors_similarity.sum()
+    
+    score = nominator / denominator
+    
+    return score
+    
+    
+    
+    
+    ## consider excepting user_name's ratings   -->   important!!
+    
+    
+    
+    
+def predict_rating_table(ratings):
+    rating_combination = list(product(ratings.index, ratings.columns))
+    
+    rating_list = []
+    
+    for user_name, book_name in rating_combination:
+        score = predict_rating(user_name, book_name)
+        
+        rating_predict = {
+            'user' : user_name,
+            'book' : book_name,
+            'score' : score
+        }
+        rating_list.append(rating_predict)
+    rating_list = pd.DataFrame(rating_list)
+    
+    rating_table = pd.pivot_table(rating_list, index = "user", columns = "book", values = "score")
+    
+    rating_table = rating_table[ratings.isnull()]
+    
+    return rating_table
+    
+    
+    
+    
+ ----> make table for predict_ratings
