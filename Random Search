@@ -1,0 +1,24 @@
+x1 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+
+y = 0.3 * x1
+
+num_epoch = 100
+
+best_error = 9999
+best_w1 = None
+best_epoch = None
+
+for epoch in range(num_epoch):
+    w1 = np.random.uniform(low = -1.0, high = 1.0)
+    y_predict = w1 * x1
+    
+    error = np.abs(y_predict - y).mean()
+    
+    if best_error > error:
+        best_error = error
+        best_w1 = w1
+        best_epoch = epoch
+        print(best_epoch, best_w1, best_error)
+        
+print("----" * 10)
+print(f"{best_epoch}, w1 = {best_w1 : 6f}, error = {best_error:.6f}")
