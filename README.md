@@ -22,6 +22,10 @@ Gradient Boosting
 practice!!
 
 perceptron!!
+
+
 Random Search
+
 h-step Search
+
 Gradient Descent
