@@ -1,0 +1,37 @@
+import numpy as np
+
+
+num_epoch = 100
+learning_rate = 1 
+## 너무 크면 error 발산할 수 있다. 
+## 또한 너무 작으면 error가 거의 줄지않아서 num_epoch의 수치가 너무 커져 효율이 떨어진다.
+
+w1 = np.random.uniform(low = -1.0, high = 1.0) 
+w2 = np.random.uniform(low = -1.0, high = 1.0)
+b = np.random.uniform(low = -1.0, high = 1.0) ## bias
+x1 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+x2 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+y = 0.3 * x1 + 0.5 * x2 + 0.1
+
+for epoch in range(num_epoch):
+
+  y_predict = w1 * x1 + w2 * x2 + b
+  
+  error = np.abs(y_predict - y).mean()
+  
+  if error < 0.0001: ## 적정한 error만큼 줄어들면 멈춘다.
+    break
+    
+  print(f"{epoch} w1 = {w1:.6f}, w2 = {w2:.6f}, b = {b:.6f}, error = {error:.6f}")
+  
+  w1 = w1 - learning_rate * ((y_predict - y) * x1).mean() 
+  w2 = w2 - learning_rate * ((y_predict - y) * x2).mean() 
+    ## gradient descent의 핵심 (Loss Function의 편미분값 --- 기울기)
+    ## 기울기가 양수면 +방향으로 멀어지고 음수면 -방향으로 멀어진다. 
+    ## 이를 이용하여 기울기를 통해 가중치를 조정!
+  b = b - learning_rate * ((y_predict - y)).mean()
+    
+  
+  
+print("----" * 10)
+print(f"{epoch} w1 = {w1:.6f}, w2 = {w2:.6f}, b = {b:.6f}, error = {error:.6f}")
