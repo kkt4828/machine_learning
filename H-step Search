@@ -1,0 +1,29 @@
+import numpy as np
+x1 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+
+num_epoch = 100
+h = 0.1
+w1 = np.random.uniform(low = -1.0, high = 1.0)
+
+for epoch in range(num_epoch):
+  y_predict = w1 * x1
+  
+  current_error = np.abs(y_predict - y).mean()
+  y_predict = (w1 + h) * x1
+  h_plus_error = np.abs(y_predict - y).mean()
+  
+  if h_plus_error < current_error: ## error가 줄어들면 w1 업데이트 (w1을 증가)
+    w1 = w1 + h
+    print(f"{epoch}, w1 = {w1 : .6f}, error = {h_plus_error:.6f}")
+    continue ## error 줄어들면 계속 업데이트 반복
+  y_predict = (w1 - h) * x1
+  h_minus_error = np.abs(y_predict - y).mean()
+  
+  if h_minus_error < current_error: ## error가 줄어들면 w1 업데이트 (w1을 감소)
+    w1 = w1 - h
+    print(f"{epoch}, w1 = {w1 : .6f}, error = {h_minus_error: .6f}")
+    continue ## error 줄어들면 계속 업데이트 반복
+  break ## 업데이트가 끝나면 for문 종료(num_epoch보다 적더라도)
+  
+print("----" * 10)
+print(f"{epoch}, w1 = {w1 : .6f}, error = {current_error:.6f}")
