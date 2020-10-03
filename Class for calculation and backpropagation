@@ -1,0 +1,64 @@
+이 class를 이용하여 복잡한 식도 편미분을 쉽게 계산하여 gradient descent의 가중치를 쉽게 계산할 수 있다.
+
+class Add:
+    def forward(self, x, y):
+        self.x = x
+        self.y = y
+        return self.x + self.y
+        
+    def backward(self):
+        dx = 1
+        dy = 1
+        return dx, dy
+        
+add = Add()
+
+add.forward(4, 5)
+## 출력값 9
+add.backward()[0]
+## 출력값 1
+add.backward()[1]
+## 출력값 1
+
+
+
+class Multiple:
+    def forward(self, x, y):
+        self.x = x
+        self.y = y
+        return self.x * self.y
+    
+    def bakcward(self)
+        dx = self.y
+        dy = self.x
+        
+        return dx, dy
+        
+mul = Multiple()
+mul.forward(3, 4)
+## 출력값 12
+
+mul.backward()[0]
+## 출력값 4
+
+mul.backward()[1]
+## 출력값 3
+
+
+class Square:
+    def forward(self, x):
+        self.x = x
+        return self.x ** 2
+        
+    def backward(self):
+        dx = 2 * self.x
+        
+        return dx
+        
+square = Square()
+square.forward(3)
+## 출력값 9
+
+square.backward()
+## 출력값 6
+
