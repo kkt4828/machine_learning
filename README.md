@@ -29,3 +29,5 @@ Random Search
 h-step Search
 
 Gradient Descent
+
+class for backpropagation and calculating partial-derivative
