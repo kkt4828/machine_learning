@@ -1,0 +1,70 @@
+iris 파일을 이용한 One Hot Encoding & Sigmoid 활용
+
+
+import numpy as np
+
+
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+
+X = iris["data"]
+
+y = iris["target"]
+
+import pandas as pd # 편의를 위해 Pandas를 사용하겠습니다.
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+data = pd.DataFrame(X, columns=iris["feature_names"]) # X를 pandas 데이터 프레임 형태로 변환합니다.
+data["species"] = y # 종에 대한 정보도 함께 저장합니다.
+
+num_species = len(data["species"].unique()) # 총 몇 개의 종이 있는지 출력합니다.
+
+num_classes = len(np.unique(y))
+
+y_hot = np.eye(num_classes)[y]
+
+### y값 one hot encoding --> 0 : [1, 0, 0] , 1 : [0, 1, 0], 2 : [0, 0, 1]
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+    
+
+num_epoch = 1000
+
+learning_rate = 0.05
+
+Xt = X.T
+
+num_data = X.shape[1]
+
+
+w = np.random.uniform(low=-1.0, high=1.0, size=(3, 4))
+
+b = np.random.uniform(low=-1.0, high=1.0, size=(3, 1))
+
+for epoch in range(num_epoch):
+    
+    y_predict_hot = np.dot(w, Xt) + b
+    y_predict_hot = sigmoid(y_predict_hot)
+    
+    y_predict = np.argmax(y_predict_hot, axis = 0)
+    accuracy = (y_predict == y).mean()
+    
+    if accuracy > 0.9:
+        break
+    
+    if epoch % 10 == 0:
+        print(f"{epoch}, accuracy = {accuracy:.6f}")
+    
+    w = w - learning_rate * np.dot((y_predict_hot - y_hot.T),X) / num_data
+    b = b - learning_rate * (y_predict_hot - y_hot.T).mean(axis = 1, keepdims = True)
+
+print("----" * 10)
+print(f"{epoch}, accuracy = {accuracy:.6f}")
+
+y_predict_hot = np.dot(w, Xt) + b
+y_predict_hot = sigmoid(y_predict_hot) #sigmoid 를 이용하여 확률 계산!
+
+np.mean(np.argmax(y_predict_hot, axis = 0) == y) # argmax를 이용해 확률이 가장 큰 index를 1로하여 일치여부를 확인 후 accuracy를 출력

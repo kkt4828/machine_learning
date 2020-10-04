@@ -1,0 +1,37 @@
+import numpy as np
+
+x1 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+x2 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+
+X = np.array([x1, x2])
+Xt = X.T #transpose 형태
+
+y = 0.3 * x1 + 0.5 * x2 + 0.7
+
+w = np.random.uniform(low = -1.0, high = 1.0, size = (1, 2))
+
+b = np.random.uniform(low = -1.0, high = 1.0, size = (1, 1))
+
+
+num_data = Xt.shape[0]
+num_epoch = 100000
+learning_rate = 0.0005
+# 기울기 변화가 큰 경우 error가 오히려 커질 수 있어 이것을 조정하여 적절하게 학습할 수 있도록하는 Parameter
+# Hyperparameter Tuning 으로 최적의 learning_rate를 찾는 것이 중요!
+
+for epoch in range(num_epoch):
+    y_predict = np.dot(w, X) + b 
+    error = np.abs(y_predict - y).mean()
+    if error < 0.0005:
+         break # error가 일정 수치 이하로 낮아지면 더이상 성능향상이 어려우므로 break한다.
+    w = w - learning_rate * np.dot((y_predict - y), Xt) / num_data
+    
+    b = b - learning_rate * (y_predict - y).mean()
+    
+    
+    
+    if epoch % 1000 == 0: #1000개마다 한번씩 출력
+         print(f"{epoch}, error = {error:.6f}")
+
+print("----" * 10)
+print(f"{epoch} , error = {error:.6f}")

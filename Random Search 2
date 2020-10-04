@@ -1,0 +1,35 @@
+import numpy as np
+import pandas as pd
+
+x1 = np.random.uniform(low = -1.0, high = 1.0, size = 100)
+
+y = 0.3 * x1
+
+num_epoch = 10000
+
+best_error = np.inf
+
+best_epoch = None
+
+best_w1 = None
+
+for epoch in range(num_epoch):
+  w1 = np.random.uniform(low = -1, high = 1)
+  
+  y_predict = w1 * x1
+  
+  error = y_predict - y
+  error = np.abs(error)
+  error = np.mean(error)
+  
+  if error < best_error:
+    best_error = error
+    
+    best_epoch = epoch
+    
+    best_w1 = w1
+    
+    print(f"{best_epoch}, best_w1 = {best_w1:.6f}, best_error = {best_error:.6f}")
+    
+print("----" * 15)
+print(f"{best_epoch} best_w1 = {best_w1:.6f}, best_error = {best_error:.6f}"
