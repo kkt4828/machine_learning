@@ -62,3 +62,37 @@ square.forward(3)
 square.backward()
 ## 출력값 6
 
+
+
+class Log:
+    def forward(self, x):
+        self.x = x
+        return np.log(self.x)
+    
+    def backward(self):
+        dx = 1 / self.x
+        return dx
+        
+log = Log()
+log.forward(e)
+## 출력값 1
+log.backward
+## 출력값 1/e
+
+class Sin:
+    def forward(self, x):
+        self.x = x
+        return np.sin(self.x)
+    
+    def backward(self):
+        dx = np.cos(self.x)
+        
+        return dx
+        
+sin = Sin()
+
+sin.forward(np.pi)
+## 출력값 0
+
+sin.backward()
+## 출력값 -1
