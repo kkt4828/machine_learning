@@ -1,0 +1,32 @@
+# recall
+# 실제값이 True일 때 모델이 True라고 예측했을 확률
+
+from sklearn.metrics import recall_score
+
+recall_score(y_true, y_pred)
+## 출력값 : recall 스코어
+
+
+
+
+# precision
+# True라고 예측했을 때 실제로 True일 확률
+from sklearn.metrics import precision_score
+
+precision_score(y_true, y_pred)
+
+## 출력값 : precision 스코어
+
+
+# f1_score
+from sklearn.metrics import f1_score
+
+f1_score(y_true, y_pred)
+
+## 출력값 : f1_score
+
+# f1_score 는 precision과 recall의 조화평균의 역수로 한 쪽 값이 너무 안좋으면 수치는 떨어진다(분모가 커짐)
+# precision과 recall의 균형이 중요
+
+
+
