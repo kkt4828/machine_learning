@@ -1,0 +1,31 @@
+# Mse loss function = (1/2) * (y_predict - y) ** 2
+
+
+class Mse:
+
+    def forward(self, y_predict, y):
+    
+        self.y_predict = y_predict
+        self.y = y
+        
+        self.multiply1 = Multiply()
+        self.add = Add()
+        self.square = Square()
+        self.multiply2 = Multiply()
+        
+        forward1 = self.multiply1.forward(self.y, -1)
+        forward2 = self.add.forward(forward1, self.y_predict)
+        forward3 = self.square.forward(forward2)
+        forward4 = self.multiply2.forward(forward3, 1/2)
+        
+        self.forward4 = forward4
+        
+        return self.forward4
+        
+    def backward(self):
+    
+        backward1 = self.multiply2.backward()[0]
+        backward2 = self.square.backward() * backward1
+        backward3 = self.add.backward()[1]
+        
+        return backward3
