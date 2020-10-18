@@ -1,0 +1,124 @@
+import numpy as np
+
+
+# Add
+
+class Add:
+    def forward(self, x, y):
+        
+        self.x = x
+        self.y = y
+        
+        return self.x + self.y
+        
+    def backward(self):
+        
+        dx = 1
+        dy = 1
+        
+        return dx, dy
+        
+        
+# Multiply
+
+class Multiply:
+    
+    def forward(self, x, y):
+        
+        self.x = x
+        self.y = y
+        
+        return self.x * self.y
+        
+    def backward(self):
+    
+        dx = self.y
+        dy = self.x
+        
+        return dx, dy
+        
+        
+        
+        
+# Square
+
+class Square:
+    def forward(self, x):
+        self.x = x
+        
+        return self.x ** 2
+        
+        
+    def backward(self):
+    
+        dx = 2 * self.x
+        
+        return dx
+        
+        
+        
+# Log
+
+class Log:
+    def forward(self, x):
+    
+        self.x = x
+        
+        return np.log(self.x)
+        
+    def backward(self):
+    
+        dx = 1 / self.x
+        
+        return dx
+        
+        
+# Sine
+
+class Sin:
+    def forward(self, x):
+    
+        self.x = x
+        
+        return np.sin(self.x)
+        
+    def backward(self):
+    
+        dx = np.cos(self.x)
+        
+        return dx
+        
+        
+# Cosine
+
+class Cos:
+    def forward(self, x):
+    
+        self.x = x
+        
+        return np.cos(self.x)
+        
+    def backward(self):
+    
+        dx = -1 * np.sin(self.x)
+        
+        return dx
+        
+        
+# Tangent
+
+class Tan:
+    def forward(self, x):
+    
+        self.x = x
+        
+        return np.tan(self.x)
+        
+    def backward(self):
+    
+        dx = 1 / (np.cos(self.x) ** 2)
+        
+        return dx
+        
+
+    
